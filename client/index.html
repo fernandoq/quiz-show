@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Quiz Show - Choose Team</title>
+
+    <script src="index.js"></script>
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+        <h1 class="header">Pick a team</h1>
+        <h2 class="team-name-sub-header"></h2>
+        <h3 class="next-round-timer"></h3>
+        <h4 class="score-sub-header"></h4>
+        <!-- note: our javascript will redraw and update this -->
+        <div class="content">
+            <div class="row">
+                <div class="col-sm-6">
+                    <button class="btn-lg btn-danger" onClick="joinTeam('red')">Red</button>
+                </div>
+                <div class="col-sm-6">
+                    <button class="btn-lg btn-primary" onClick="joinTeam('blue')">Blue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
