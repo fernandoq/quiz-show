@@ -10,7 +10,7 @@ red_team_size = 0
 blue_score = 0
 blue_team_size = 0
 
-round_duration = 20 # seconds
+round_duration = 120 # seconds
 song_filepaths = []
 currentSongIndex = -1 # index of current song playing.
 currentRound = {}

@@ -7,24 +7,15 @@ import SimpleHTTPServer
 import time
 #import RPi.GPIO as GPIO
 
-
 # Imports our libraries.
-#import audio
+import audio
 import game
 
 
 class MyHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        print "hi drs"
-        print self.path
         if self.path == "/getRound":
             response = game.getRound()
-
-            # self.send_response(200)
-            # self.send_header('Content-type','text/html')
-            # self.end_headers()
-            # self.wfile.write("<h1>Device Static Content</h1>")
-
             self.send_response(200)
             self.send_header('Content-type','application/json')
             self.end_headers()
@@ -45,12 +36,10 @@ class MyHandler(SimpleHTTPRequestHandler):
 
         if path == "/song":
             print "play a song"
-            #audio.play_song("/music/song.mp3")
 
         elif path == "/reset":
             game.init()
         elif path == "/resetScore":
-            #TODO
             print "hi"
         elif path == ("/join/red"):
             game.joinTeam("red")
@@ -63,11 +52,6 @@ class MyHandler(SimpleHTTPRequestHandler):
         else:
             print "Unkown command: " + path
 
-
-	    # default root -> cwd        
-        #root = os.getcwd()
-        #print root
-        # return unchanged path to get any appropriate files.
         return path[1:]
 
 
