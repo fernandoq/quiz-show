@@ -1,4 +1,4 @@
-var baseUrl = 'http://192.168.42.68:8000',
+var baseUrl = 'http://192.168.42.73:8000',
     team,
     correctQuestion,
     otherQuestions = [],

@@ -3,6 +3,7 @@ from os import listdir
 from os.path import isfile
 from random import randint
 import threading
+import audio
 
 red_score = 0
 red_team_size = 0
@@ -73,6 +74,7 @@ def prepareRound():
 
 
 	# start round in 'duration' from now.
+	print "prepare rpound"
 	threading.Timer(round_duration, startRound).start()
 	return currentRound
 
@@ -95,7 +97,7 @@ def startRound():
 	global correct_answers_this_round
 	correct_answers_this_round = 0
 	print "todo uncomment play music."
-	#audio.playSong(song_filepaths[currentSongIndex])
+	audio.playSong(song_filepaths[currentSongIndex])
 	prepareRound()
 
 
