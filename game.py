@@ -10,11 +10,12 @@ red_team_size = 0
 blue_score = 0
 blue_team_size = 0
 
-round_duration = 120 # seconds
+round_duration = 40 # seconds
 song_filepaths = []
 currentSongIndex = -1 # index of current song playing.
 currentRound = {}
 correct_answers_this_round = 0
+previously_played_songs = []
 
 # Initialize  the game.
 def init():
@@ -25,11 +26,13 @@ def init():
 	global blue_team_size
 	global song_filepaths
 	global currentSongIndex
+	global previously_played_songs
 	red_score = 0
 	red_team_size = 0
 	blue_score = 0
 	blue_team_size = 0
 	currentSongIndex = -1
+	previously_played_songs = [-1]
 	# Read in full list of files.
 	song_filepaths = [ f for f in listdir("music/") ]
 
@@ -56,9 +59,18 @@ def prepareRound():
 	global song_filepaths
 	global round_duration
 	global currentRound
+	global previously_played_songs
 
-	currentSongIndex = randint(0, len(song_filepaths) - 1)
-	print currentSongIndex
+	# reset previously_played_songs if all are played
+	if (len(previously_played_songs) == len(song_filepaths)):
+		previously_played_songs = [currentSongIndex]
+
+	# find a previously unplayed song
+	while (currentSongIndex in previously_played_songs):
+		currentSongIndex = randint(0, len(song_filepaths) - 1)
+		print previously_played_songs
+	previously_played_songs.append(currentSongIndex)
+
 	currentRound = {}
 	currentRound["startTime"] = (time.time() * 1000) + (1000 * round_duration)
 	currentRound["correctAnswer"] = song_filepaths[currentSongIndex]
@@ -67,6 +79,7 @@ def prepareRound():
 	currentRound["redScore"] = red_score
 	currentRound["blueScore"] = blue_score
 
+	# populating wrong answers
 	while (len(currentRound["wrongAnswers"]) < 4):
 		index = randint(0, len(song_filepaths) - 1)
 		if index != currentSongIndex and song_filepaths[index] not in currentRound["wrongAnswers"]:
@@ -80,6 +93,10 @@ def prepareRound():
 
 def getRound():
 	global currentRound
+	global red_score
+	global blue_score
+	currentRound["redScore"] = red_score
+	currentRound["blueScore"] = blue_score
 	return currentRound
 
 def getScore():
