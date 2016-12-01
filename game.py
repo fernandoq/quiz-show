@@ -4,13 +4,14 @@ from os.path import isfile
 from random import randint
 import threading
 import audio
+import rf
 
 red_score = 0
 red_team_size = 0
 blue_score = 0
 blue_team_size = 0
 
-round_duration = 40 # seconds
+round_duration = 60 # seconds
 song_filepaths = []
 currentSongIndex = -1 # index of current song playing.
 currentRound = {}
@@ -35,10 +36,27 @@ def init():
 	previously_played_songs = [-1]
 	# Read in full list of files.
 	song_filepaths = [ f for f in listdir("music/") ]
+	print "done init"
+
+#TODO: currently not called anywhere
+def celebrate():
+	global red_score
+	global blue_score
+
+	red_score = 0
+	blue_score = 0
+	# turn on spotlight
+	rf.on(3)
+	# sleep time in seconds
+	time.sleep(60)
+	#turn off spotlight
+	rf.off(3)
+
 
 def joinTeam(team):
 	global red_team_size
 	global blue_team_size
+	print "join team" + team
 	if team == "red":
 		red_team_size += 1
 	else:
@@ -48,6 +66,8 @@ def joinTeam(team):
 
 
 def prepareRound():
+	num_of_wrong_songs = 5
+	# just call celebrate to test.
 	# Choose a song from the list.
 	# Choose some wrong answers.
 	# Choose a start time.
@@ -80,7 +100,7 @@ def prepareRound():
 	currentRound["blueScore"] = blue_score
 
 	# populating wrong answers
-	while (len(currentRound["wrongAnswers"]) < 4):
+	while (len(currentRound["wrongAnswers"]) < num_of_wrong_songs):
 		index = randint(0, len(song_filepaths) - 1)
 		if index != currentSongIndex and song_filepaths[index] not in currentRound["wrongAnswers"]:
 			currentRound["wrongAnswers"].append(song_filepaths[index])
@@ -111,9 +131,16 @@ def startRound():
 	global currentSongIndex
 	global currentRound
 	global song_filepaths
+	global previously_played_songs
 	global correct_answers_this_round
 	correct_answers_this_round = 0
 	print "todo uncomment play music."
+
+	print "drs"+str(len(previously_played_songs)+1%6)
+	if (((len(previously_played_songs)+1) % 6) == 0):
+		print "celebrate!!"
+		celebrate()
+
 	audio.playSong(song_filepaths[currentSongIndex])
 	prepareRound()
 

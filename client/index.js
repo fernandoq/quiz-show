@@ -1,4 +1,4 @@
-var baseUrl =  'http://localhost:8000', // raspi ip: 'http://192.168.42.73:8000',
+var baseUrl =  'http://192.168.42.73:8000',
     team,
     correctQuestion,
     otherQuestions = [],
@@ -10,9 +10,12 @@ var baseUrl =  'http://localhost:8000', // raspi ip: 'http://192.168.42.73:8000'
 
 function joinTeam(teamName) {
     team = teamName;
-    $('.team-name-sub-header').html(team + ' team').css('color', team);
+    if (teamName === 'blue') {
+    	teamName = 'green';
+    }
+    $('.team-name-sub-header').html(teamName + ' team').css('color', teamName);
     $.ajax({
-        url: baseUrl + '/join/' + teamName,
+        url: baseUrl + '/join/' + team,
         type: 'GET',
         success: function(data) {
             //alert('You joined the ' + team + 'team');
@@ -100,9 +103,9 @@ function setRoundUp(data) {
     $('.content').html('');
 
     if (team === 'blue') {
-        scoreText = 'Blue: ' + blueScore + ' Red: ' + redScore;
+        scoreText = 'Green: ' + blueScore + ' Red: ' + redScore;
     } else {
-        scoreText = 'Red: ' + redScore + ' Blue: ' + blueScore;
+        scoreText = 'Red: ' + redScore + ' Green: ' + blueScore;
     }
 
     $('.score-sub-header').html(scoreText);
@@ -111,7 +114,7 @@ function setRoundUp(data) {
 
     return setTimeout(function() {
         $('.next-round-timer').html('');
-        $('.header').html('What song is playing?');
+        $('.header').html();
         $('.content').html(htmlForButtons);
     }, millisecondsUntilRoundStarts);
 }
